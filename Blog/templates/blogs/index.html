@@ -1,0 +1,57 @@
+{% extends 'blogs/base.html' %}
+
+{% block title %}
+    {% if page_title %}{{ page_title }} - {% endif %}我的博客
+{% endblock %}
+
+{% block content %}
+    <!-- 统计信息 -->
+    {% if user.is_authenticated %}
+        <div class="user-stats">
+            <i class="fas fa-file-alt"></i> 
+            您已发布 {{ user_post_count }} 篇文章
+        </div>
+    {% endif %}
+    
+    <!-- 文章列表 -->
+    {% if posts %}
+        {% for post in posts %}
+            <div class="post-card">
+                <h3 class="post-title fw-bold">
+                    {{ post.title }}
+                </h3>
+                
+                <div class="post-meta">
+                    <i class="fas fa-user"></i> 
+                    <a href="{% url 'blogs:user_posts' post.owner.username %}" class="text-decoration-none text-primary">
+                        {{ post.owner.username }}
+                    </a>
+                    
+                    <i class="fas fa-calendar ms-3"></i> 
+                    {{ post.date_added|date:"Y年m月d日 H:i" }}
+                </div>
+                
+                <p class="post-content">{{ post.get_text_preview }}</p>
+                
+                <!-- 操作按钮（仅所有者可见） -->
+                {% if user.is_authenticated and post.owner == user %}
+                    <div class="mt-3">
+                        <a href="{% url 'blogs:edit_post' post.id %}" class="btn btn-sm btn-outline-primary">
+                            <i class="fas fa-edit"></i> 编辑
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="text-center py-5">
+            <i class="fas fa-blog fa-3x text-muted mb-3"></i>
+            <p class="text-muted">博客为空，快来发布第一篇文章吧！</p>
+            {% if user.is_authenticated %}
+                <a href="{% url 'blogs:new_post' %}" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> 发布文章
+                </a>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endblock %}

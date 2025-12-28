@@ -1,0 +1,14 @@
+/* 自定义样式文件（如果需要覆盖Bootstrap样式） */
+/* 这个文件是可选的，base.html中已经包含了内联样式 */
+
+/* 示例：自定义按钮悬停效果 */
+.btn-custom {
+    background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-custom:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(238, 90, 36, 0.4);
+}

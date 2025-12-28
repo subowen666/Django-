@@ -1,0 +1,9 @@
+{% extends 'blogs/base.html' %}
+
+{% block title %}已退出登录 - 我的博客{% endblock %}
+
+{% block content %}
+    <h2>您已成功退出登录</h2>
+    <p>感谢您的使用，期待您的再次光临！</p>
+    <a href="{% url 'blogs:index' %}" class="btn btn-primary">返回首页</a>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'blogs/base.html' %}  ✅ 正确的继承路径
+
+{% block title %}用户登录 - 我的博客{% endblock %}
+
+{% block content %}
+    <form method="post" novalidate>
+        {% csrf_token %}
+        
+        {% if form.errors %}
+            <div class="alert alert-danger">
+                <i class="fas fa-exclamation-circle"></i> 用户名或密码错误
+            </div>
+        {% endif %}
+        
+        {% for field in form %}
+            <div class="mb-3">
+                <label class="form-label">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    <div class="text-danger small">{{ field.errors }}</div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        
+        <button type="submit" class="btn btn-primary w-100">
+            <i class="fas fa-sign-in-alt"></i> 登录
+        </button>
+    </form>
+    
+    <p class="text-center mt-3">
+        没有账号？<a href="{% url 'accounts:register' %}">立即注册</a>
+    </p>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'blogs/base.html' %}
+
+{% block title %}{{ page_title }} - 我的博客{% endblock %}
+
+{% block content %}
+    <form method="post" novalidate>
+        {% csrf_token %}
+        
+        <!-- 显示表单错误 -->
+        {% if form.errors %}
+            <div class="alert alert-danger">
+                <i class="fas fa-exclamation-triangle"></i> 请检查表单中的错误。
+            </div>
+        {% endif %}
+        
+        <!-- 标题字段 -->
+        <div class="mb-3">
+            <label class="form-label">{{ form.title.label }}</label>
+            {{ form.title }}
+            {% if form.title.errors %}
+                <div class="text-danger small">{{ form.title.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <!-- 内容字段 -->
+        <div class="mb-3">
+            <label class="form-label">{{ form.text.label }}</label>
+            {{ form.text }}
+            {% if form.text.errors %}
+                <div class="text-danger small">{{ form.text.errors }}</div>
+            {% endif %}
+            <div class="form-text">文章内容支持纯文本格式</div>
+        </div>
+        
+        <div class="d-flex justify-content-between">
+            <a href="{% url 'blogs:index' %}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> 返回
+            </a>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i> 保存
+            </button>
+        </div>
+    </form>
+{% endblock %}
